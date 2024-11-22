@@ -16,7 +16,7 @@ handler = WebhookHandler('dc1be297b717f7750aefdaf524d580b9')
 def webhook():
     signature = request.headers['X-Line-Signature']
     body = request.get_data(as_text=True)
-
+    
     try:
         handler.handle(body, signature)
     except InvalidSignatureError:
