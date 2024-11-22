@@ -6,6 +6,8 @@ from linebot.models import (
     MessageAction, CameraAction, CameraRollAction, LocationAction,
     PostbackAction, DatetimePickerAction, FlexSendMessage, URIAction
 )
+import requests
+from requests.exceptions import Timeout
 
 # ค่าคอนฟิก
 LINE_CHANNEL_ACCESS_TOKEN = "GSjV7n/15Cucn66H1TCXPV1F/GoklTZxI/pTCrdevhD1M69V306HHKh27ce2D1wohujGNp2dMApGqo80mcvYEwl1IKKXqBVpr+YXnpB6V1noFkMXBANgPpejVhKvs6nKDG0FEcmNHaxprJV836R5fgdB04t89/1O/w1cDnyilFU="
@@ -17,7 +19,6 @@ handler = WebhookHandler(LINE_CHANNEL_SECRET)
 
 # ฟังก์ชันสำหรับการเริ่มต้น
 def handle_start(event):
-    # สร้างเมนูหัวข้อใหญ่ 6 ข้อ
     flex_message = FlexSendMessage(
         alt_text="เลือกหัวข้อใหญ่",
         contents={
@@ -196,6 +197,10 @@ def webhook():
         handler.handle(body, signature)
     except InvalidSignatureError:
         return "Invalid signature", 400
+    except Timeout:
+        return "Request timed out, please try again", 504
+    except Exception as e:
+        return f"An error occurred: {str(e)}", 500
 
     return "OK", 200
 
@@ -213,4 +218,4 @@ def handle_message(event):
         )
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, use_reloader=False)
