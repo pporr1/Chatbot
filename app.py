@@ -1,3 +1,4 @@
+
 from flask import Flask, request
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
@@ -11,15 +12,15 @@ from linebot.models import (
 LINE_CHANNEL_ACCESS_TOKEN = "GSjV7n/15Cucn66H1TCXPV1F/GoklTZxI/pTCrdevhD1M69V306HHKh27ce2D1wohujGNp2dMApGqo80mcvYEwl1IKKXqBVpr+YXnpB6V1noFkMXBANgPpejVhKvs6nKDG0FEcmNHaxprJV836R5fgdB04t89/1O/w1cDnyilFU="
 LINE_CHANNEL_SECRET = "dc1be297b717f7750aefdaf524d580b9"
 
-
 app = Flask(__name__)
 line_bot_api = LineBotApi(LINE_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(LINE_CHANNEL_SECRET)
 
-# ฟังก์ชันสำหรับ Flex Message
-def handle_flex_message(event):
+# ฟังก์ชันสำหรับการเริ่มต้น
+def handle_start(event):
+    # สร้างเมนูหัวข้อใหญ่ 6 ข้อ
     flex_message = FlexSendMessage(
-        alt_text="Flex Message",
+        alt_text="เลือกหัวข้อใหญ่",
         contents={
             "type": "bubble",
             "body": {
@@ -147,12 +148,14 @@ def webhook():
 # Event Handler
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    if event.message.text.startswith("หัวข้อใหญ่"):
+    if event.message.text == "เริ่มต้น":
+        handle_start(event)
+    elif event.message.text.startswith("หัวข้อใหญ่"):
         handle_subtopics(event, event.message.text)
     else:
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text="ไม่เข้าใจคำสั่ง!")
+            TextSendMessage(text="กรุณาพิมพ์ 'เริ่มต้น' เพื่อเริ่มต้นเลือกหัวข้อ")
         )
 
 # รันเซิร์ฟเวอร์
