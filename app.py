@@ -1,4 +1,3 @@
-
 from flask import Flask, request
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
@@ -30,56 +29,80 @@ def handle_start(event):
                     {
                         "type": "button",
                         "style": "primary",
+                        "color": "#FFCC00",  # สีเหลือง
                         "action": {
                             "type": "message",
                             "label": "หัวข้อใหญ่ 1",
                             "text": "หัวข้อใหญ่ 1"
-                        }
+                        },
+                        "margin": "sm",
+                        "height": "sm",
+                        "gravity": "center"
                     },
                     {
                         "type": "button",
                         "style": "primary",
+                        "color": "#FFCC00",  # สีเหลือง
                         "action": {
                             "type": "message",
                             "label": "หัวข้อใหญ่ 2",
                             "text": "หัวข้อใหญ่ 2"
-                        }
+                        },
+                        "margin": "sm",
+                        "height": "sm",
+                        "gravity": "center"
                     },
                     {
                         "type": "button",
                         "style": "primary",
+                        "color": "#FFCC00",  # สีเหลือง
                         "action": {
                             "type": "message",
                             "label": "หัวข้อใหญ่ 3",
                             "text": "หัวข้อใหญ่ 3"
-                        }
+                        },
+                        "margin": "sm",
+                        "height": "sm",
+                        "gravity": "center"
                     },
                     {
                         "type": "button",
                         "style": "primary",
+                        "color": "#FFCC00",  # สีเหลือง
                         "action": {
                             "type": "message",
                             "label": "หัวข้อใหญ่ 4",
                             "text": "หัวข้อใหญ่ 4"
-                        }
+                        },
+                        "margin": "sm",
+                        "height": "sm",
+                        "gravity": "center"
                     },
                     {
                         "type": "button",
                         "style": "primary",
+                        "color": "#FFCC00",  # สีเหลือง
                         "action": {
                             "type": "message",
                             "label": "หัวข้อใหญ่ 5",
                             "text": "หัวข้อใหญ่ 5"
-                        }
+                        },
+                        "margin": "sm",
+                        "height": "sm",
+                        "gravity": "center"
                     },
                     {
                         "type": "button",
                         "style": "primary",
+                        "color": "#FFCC00",  # สีเหลือง
                         "action": {
                             "type": "message",
                             "label": "หัวข้อใหญ่ 6",
                             "text": "หัวข้อใหญ่ 6"
-                        }
+                        },
+                        "margin": "sm",
+                        "height": "sm",
+                        "gravity": "center"
                     }
                 ]
             }
@@ -104,7 +127,34 @@ def handle_subtopics(event, main_topic):
             {"label": "ย่อย 3", "url": "https://www.example7.com"},
             {"label": "ย่อย 4", "url": "https://www.example8.com"}
         ]
-    # ... เพิ่มกรณีของหัวข้อใหญ่ที่เหลือตามต้องการ
+    elif main_topic == "หัวข้อใหญ่ 3":
+        subtopics = [
+            {"label": "ย่อย 1", "url": "https://www.example9.com"},
+            {"label": "ย่อย 2", "url": "https://www.example10.com"},
+            {"label": "ย่อย 3", "url": "https://www.example11.com"},
+            {"label": "ย่อย 4", "url": "https://www.example12.com"}
+        ]
+    elif main_topic == "หัวข้อใหญ่ 4":
+        subtopics = [
+            {"label": "ย่อย 1", "url": "https://www.example13.com"},
+            {"label": "ย่อย 2", "url": "https://www.example14.com"},
+            {"label": "ย่อย 3", "url": "https://www.example15.com"},
+            {"label": "ย่อย 4", "url": "https://www.example16.com"}
+        ]
+    elif main_topic == "หัวข้อใหญ่ 5":
+        subtopics = [
+            {"label": "ย่อย 1", "url": "https://www.example17.com"},
+            {"label": "ย่อย 2", "url": "https://www.example18.com"},
+            {"label": "ย่อย 3", "url": "https://www.example19.com"},
+            {"label": "ย่อย 4", "url": "https://www.example20.com"}
+        ]
+    elif main_topic == "หัวข้อใหญ่ 6":
+        subtopics = [
+            {"label": "ย่อย 1", "url": "https://www.example21.com"},
+            {"label": "ย่อย 2", "url": "https://www.example22.com"},
+            {"label": "ย่อย 3", "url": "https://www.example23.com"},
+            {"label": "ย่อย 4", "url": "https://www.example24.com"}
+        ]
 
     # สร้าง Flex Message สำหรับข้อย่อย
     subtopic_buttons = []
@@ -112,11 +162,15 @@ def handle_subtopics(event, main_topic):
         subtopic_buttons.append({
             "type": "button",
             "style": "secondary",
+            "color": "#A6A6A6",  # สีเทา
             "action": {
                 "type": "uri",
                 "label": sub["label"],
                 "uri": sub["url"]
-            }
+            },
+            "margin": "sm",
+            "height": "sm",
+            "gravity": "center"
         })
 
     flex_message = FlexSendMessage(
@@ -155,9 +209,8 @@ def handle_message(event):
     else:
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text="กรุณาพิมพ์ 'เริ่มต้น' เพื่อเริ่มต้นเลือกหัวข้อ")
+            TextSendMessage(text="กรุณาพิมพ์ 'เริ่มต้น' เพื่อเริ่มเลือกหัวข้อใหญ่")
         )
 
-# รันเซิร์ฟเวอร์
 if __name__ == "__main__":
-    app.run(port=8000)
+    app.run(debug=True)
